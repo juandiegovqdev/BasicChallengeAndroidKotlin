@@ -70,6 +70,15 @@ class MainActivity : AppCompatActivity() {
                             if (child != null && gestureDetector.onTouchEvent(motionEvent)) {
                                 val position = rv.getChildAdapterPosition(child)
                                 Toast.makeText(this@MainActivity, "The Item Clicked is: ${response.body()!![position].name}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@MainActivity, "The Item Description is: ${response.body()!![position].description}", Toast.LENGTH_SHORT).show()
+
+                                var name : String = response.body()!![position].name
+                                var id: String = response.body()!![position].id
+                                var desc: String = response.body()!![position].description
+                                var imageUrl: String = response.body()!![position].imageUrl
+                                var genre: String = response.body()!![position].genre
+                                var character : Character = Character(name, name, name, name, name)
+                                // character.name = response.body()!![position].name
 
                                 return true
                             }
@@ -91,4 +100,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+
+
 }

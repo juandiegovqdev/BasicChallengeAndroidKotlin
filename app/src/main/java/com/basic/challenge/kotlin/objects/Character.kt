@@ -5,4 +5,9 @@ class Character(
         val description: String,
         val imageUrl: String,
         val name: String,
-        val genre: String)
+        val genre: String){
+
+    init {
+
+    }
+}
