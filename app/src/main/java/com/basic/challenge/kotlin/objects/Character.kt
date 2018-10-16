@@ -6,8 +6,4 @@ class Character(
         val imageUrl: String,
         val name: String,
         val genre: String){
-
-    init {
-
-    }
 }
