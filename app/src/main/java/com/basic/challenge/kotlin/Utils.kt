@@ -10,15 +10,6 @@ import android.support.v4.content.ContextCompat.startActivity
 // user more than one time.
 class Utils {
 
-    fun openActivity(ctx : Context, activity : Activity){
-
-        /*
-        val intent = Intent(ctx, activity::class.java)
-        startActivity(ctx)
-        */
-
-    }
-
     fun showToast(ctx : Context, message : String){
 
     }

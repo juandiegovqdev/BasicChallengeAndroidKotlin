@@ -1,11 +1,11 @@
-package com.basic.challenge.kotlin
+package com.basic.challenge.kotlin.character_details
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.basic.challenge.kotlin.R
 
 import kotlinx.android.synthetic.main.activity_details.*
 

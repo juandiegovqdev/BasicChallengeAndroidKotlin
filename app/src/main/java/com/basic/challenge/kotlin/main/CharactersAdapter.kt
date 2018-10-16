@@ -1,4 +1,4 @@
-package com.basic.challenge.kotlin.adapters
+package com.basic.challenge.kotlin.main
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
