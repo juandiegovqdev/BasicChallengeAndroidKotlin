@@ -1,7 +1,6 @@
 package com.basic.challenge.kotlin.character_details
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView
 import android.widget.TextView
