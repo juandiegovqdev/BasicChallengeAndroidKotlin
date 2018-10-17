@@ -20,10 +20,9 @@ import com.basic.challenge.kotlin.character_details.DetailsActivity
 import com.basic.challenge.kotlin.interfaces.MockyService
 import com.basic.challenge.kotlin.objects.Character;
 
-
 class MainActivity : AppCompatActivity(), MainView {
 
-    private var presenter = MainPresenter()
+    private var presenter = MainPresenter(this)
     lateinit var rv: RecyclerView
     lateinit var characters: Call<List<Character>>
     lateinit var gestureDetector: GestureDetector
@@ -33,13 +32,18 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize UI IBjects
+        // Initialize UI Objects
         pb = findViewById<ContentLoadingProgressBar>(R.id.pb)
         rv = findViewById<RecyclerView>(R.id.rv)
 
         initalizeGestureDetector()
         getCharacters()
         populateList()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
     }
 
     // With initializeGestureDetector(), we are initializing a gesture detector,

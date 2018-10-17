@@ -1,12 +1,14 @@
 package com.basic.challenge.kotlin.objects
 
-class Character {
+import java.io.Serializable
 
-    val id: String = ""
-    val description: String = ""
-    val imageUrl: String = ""
-    val name: String = ""
-    val genre: String = ""
+class Character : Serializable {
+
+    var id: String = ""
+    var description: String = ""
+    var imageUrl: String = ""
+    var name: String = ""
+    var genre: String = ""
 
     constructor() {}
 

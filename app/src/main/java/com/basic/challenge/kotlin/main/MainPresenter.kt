@@ -25,10 +25,7 @@ import com.basic.challenge.kotlin.Utils
 import com.basic.challenge.kotlin.Utils.*
 import okhttp3.internal.Util
 
-
-class MainPresenter {
-
-    class MainPresenter()
+class MainPresenter(var mainView: MainView?) {
 
     fun populateList(rv: RecyclerView, ctx: Context, characters: Call<List<Character>>, pb: ContentLoadingProgressBar, gestureDetector: GestureDetector) {
         val adp = CharactersAdapter(ctx)
@@ -47,17 +44,13 @@ class MainPresenter {
                     override fun onInterceptTouchEvent(rv: RecyclerView?, motionEvent: MotionEvent?): Boolean {
                         try {
                             val child = rv!!.findChildViewUnder(motionEvent!!.x, motionEvent.y)
-
                             if (child != null && gestureDetector.onTouchEvent(motionEvent)) {
                                 val position = rv.getChildAdapterPosition(child)
                                 // Toast.makeText(ctx, "The Item Clicked is: ${response.body()!![position].name}", Toast.LENGTH_SHORT).show()
                                 // Toast.makeText(this@MainActivity, "The Item Description is: ${response.body()!![position].description}", Toast.LENGTH_SHORT).show()
-                                Utils.showToast(ctx, "Hello")
-                                // val intent = Intent(ctx, DetailsActivity::class.java)
-                                // startActivity(intent)
 
                                 // val intent = Intent(ctx, DetailsActivity::class.java)
-                                // startActivity(ctx, intent)
+                                // startActivity(intent)
 
                                 var name: String = response.body()!![position].name
                                 var id: String = response.body()!![position].id
@@ -65,22 +58,26 @@ class MainPresenter {
                                 var imageUrl: String = response.body()!![position].imageUrl
                                 var genre: String = response.body()!![position].genre
 
-                                var character: Character = Character(id, desc, imageUrl, name, genre)
+                                var character = Character()
+                                character.name = name
+                                character.imageUrl = imageUrl
+                                character.description = desc
+                                character.id = id
+                                character.genre = genre
 
-                                // Shows a toast to check that the object works correctly.
-                                // Toast.makeText(this@MainActivity, "The Item Description is: ${character.name}", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(ctx, DetailsActivity::class.java)
+                                intent.putExtra("character", character)
+                                startActivity(ctx, intent, null)
 
                                 return true
                             }
                         } catch (e: Exception) {
                             println("Error ${e.printStackTrace()}")
                         }
-
                         return false
                     }
 
                     override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-
                 })
             }
 
@@ -96,7 +93,6 @@ class MainPresenter {
                 .baseUrl("http://www.mocky.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-
         val service = retrofit.create(MockyService::class.java)
         var characters = service.listCharacters()
         return characters
@@ -111,4 +107,7 @@ class MainPresenter {
         return gestureDetector
     }
 
+    fun onDestroy() {
+        mainView = null
+    }
 }
