@@ -1,16 +1,5 @@
 package com.basic.challenge.kotlin.objects
 
-import java.io.FileDescriptor
-
-/*
-class Character(
-        val id: String,
-        val description: String,
-        val imageUrl: String,
-        val name: String,
-        val genre: String)
-*/
-
 class Character {
 
     val id: String = ""
@@ -19,9 +8,7 @@ class Character {
     val name: String = ""
     val genre: String = ""
 
-    constructor() {
-
-    }
+    constructor() {}
 
     constructor(name: String, id: String,
                 description: String, imageUrl: String,

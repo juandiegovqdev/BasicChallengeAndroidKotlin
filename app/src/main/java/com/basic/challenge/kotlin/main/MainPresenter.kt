@@ -19,12 +19,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import android.support.v4.content.ContextCompat.startActivity
+import android.widget.Toast
+import com.basic.challenge.kotlin.Utils
+import com.basic.challenge.kotlin.Utils.*
+import okhttp3.internal.Util
+
 
 class MainPresenter {
 
-    class MainPresenter ()
+    class MainPresenter()
 
-    fun populateList(rv : RecyclerView, ctx : Context, characters : Call<List<Character>>, pb : ContentLoadingProgressBar, gestureDetector: GestureDetector){
+    fun populateList(rv: RecyclerView, ctx: Context, characters: Call<List<Character>>, pb: ContentLoadingProgressBar, gestureDetector: GestureDetector) {
         val adp = CharactersAdapter(ctx)
         rv.layoutManager = LinearLayoutManager(ctx)
         rv.setHasFixedSize(true)
@@ -44,11 +50,14 @@ class MainPresenter {
 
                             if (child != null && gestureDetector.onTouchEvent(motionEvent)) {
                                 val position = rv.getChildAdapterPosition(child)
-                                // Toast.makeText(this@MainActivity, "The Item Clicked is: ${response.body()!![position].name}", Toast.LENGTH_SHORT).show()
+                                // Toast.makeText(ctx, "The Item Clicked is: ${response.body()!![position].name}", Toast.LENGTH_SHORT).show()
                                 // Toast.makeText(this@MainActivity, "The Item Description is: ${response.body()!![position].description}", Toast.LENGTH_SHORT).show()
-
+                                Utils.showToast(ctx, "Hello")
                                 // val intent = Intent(ctx, DetailsActivity::class.java)
                                 // startActivity(intent)
+
+                                // val intent = Intent(ctx, DetailsActivity::class.java)
+                                // startActivity(ctx, intent)
 
                                 var name: String = response.body()!![position].name
                                 var id: String = response.body()!![position].id
@@ -80,23 +89,20 @@ class MainPresenter {
                 pb.hide()
             }
         })
-
-
     }
 
-    fun getCharacters() : Call<List<Character>> {
+    fun getCharacters(): Call<List<Character>> {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.mocky.io/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
         val service = retrofit.create(MockyService::class.java)
-
         var characters = service.listCharacters()
         return characters
     }
 
-    fun initalizeGestureDetector(ctx : Context):GestureDetector{
+    fun initalizeGestureDetector(ctx: Context): GestureDetector {
         var gestureDetector = GestureDetector(ctx, object : GestureDetector.SimpleOnGestureListener() {
             override fun onSingleTapUp(e: MotionEvent): Boolean {
                 return true
@@ -104,4 +110,5 @@ class MainPresenter {
         })
         return gestureDetector
     }
+
 }

@@ -25,13 +25,15 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private var presenter = MainPresenter()
     lateinit var rv: RecyclerView
-    lateinit var characters : Call<List<Character>>
+    lateinit var characters: Call<List<Character>>
     lateinit var gestureDetector: GestureDetector
-    lateinit var pb : ContentLoadingProgressBar
+    lateinit var pb: ContentLoadingProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Initialize UI IBjects
         pb = findViewById<ContentLoadingProgressBar>(R.id.pb)
         rv = findViewById<RecyclerView>(R.id.rv)
 
@@ -40,14 +42,20 @@ class MainActivity : AppCompatActivity(), MainView {
         populateList()
     }
 
+    // With initializeGestureDetector(), we are initializing a gesture detector,
+    // to handle the OnClick Method of the RecyclerView.
     override fun initalizeGestureDetector() {
         gestureDetector = presenter.initalizeGestureDetector(this)
     }
 
+    // With getCharacters(), we are initializing a Retrofit object, so that we get
+    // a list populated with all characters.
     override fun getCharacters() {
         characters = presenter.getCharacters()
     }
 
+    // With populateList(), we are calling the method from the presenter, so that we populate
+    // a RecyclerView with the list of characters that we got from getCharacters()
     override fun populateList() {
         presenter.populateList(rv, this, characters, pb, gestureDetector)
     }
