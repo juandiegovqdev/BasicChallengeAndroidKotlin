@@ -19,7 +19,9 @@ class Character {
     val name: String = ""
     val genre: String = ""
 
-    constructor() {}
+    constructor() {
+
+    }
 
     constructor(name: String, id: String,
                 description: String, imageUrl: String,

@@ -26,7 +26,6 @@ class DetailsActivity : AppCompatActivity() {
         var character_description_text: TextView? = findViewById(R.id.character_description_text) as TextView
 
 
-        //
 
     }
 
