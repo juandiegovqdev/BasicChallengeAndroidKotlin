@@ -27,6 +27,8 @@ import okhttp3.internal.Util
 
 class MainPresenter(var mainView: MainView?) {
 
+    // With populateList(), we are calling the method from the presenter, so that we populate
+    // a RecyclerView with the list of characters that we got from getCharacters()
     fun populateList(rv: RecyclerView, ctx: Context, characters: Call<List<Character>>, pb: ContentLoadingProgressBar, gestureDetector: GestureDetector) {
         val adp = CharactersAdapter(ctx)
         rv.layoutManager = LinearLayoutManager(ctx)
@@ -46,24 +48,13 @@ class MainPresenter(var mainView: MainView?) {
                             val child = rv!!.findChildViewUnder(motionEvent!!.x, motionEvent.y)
                             if (child != null && gestureDetector.onTouchEvent(motionEvent)) {
                                 val position = rv.getChildAdapterPosition(child)
-                                // Toast.makeText(ctx, "The Item Clicked is: ${response.body()!![position].name}", Toast.LENGTH_SHORT).show()
-                                // Toast.makeText(this@MainActivity, "The Item Description is: ${response.body()!![position].description}", Toast.LENGTH_SHORT).show()
-
-                                // val intent = Intent(ctx, DetailsActivity::class.java)
-                                // startActivity(intent)
-
-                                var name: String = response.body()!![position].name
-                                var id: String = response.body()!![position].id
-                                var desc: String = response.body()!![position].description
-                                var imageUrl: String = response.body()!![position].imageUrl
-                                var genre: String = response.body()!![position].genre
 
                                 var character = Character()
-                                character.name = name
-                                character.imageUrl = imageUrl
-                                character.description = desc
-                                character.id = id
-                                character.genre = genre
+                                character.name = response.body()!![position].name
+                                character.imageUrl = response.body()!![position].imageUrl
+                                character.description = response.body()!![position].description
+                                character.id = response.body()!![position].id
+                                character.genre = response.body()!![position].genre
 
                                 val intent = Intent(ctx, DetailsActivity::class.java)
                                 intent.putExtra("character", character)
@@ -88,6 +79,8 @@ class MainPresenter(var mainView: MainView?) {
         })
     }
 
+    // With getCharacters(), we are initializing a Retrofit object, so that we get
+    // a list populated with all characters.
     fun getCharacters(): Call<List<Character>> {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://www.mocky.io/")
@@ -98,6 +91,8 @@ class MainPresenter(var mainView: MainView?) {
         return characters
     }
 
+    // With initializeGestureDetector(), we are initializing a gesture detector,
+    // to handle the OnClick Method of the RecyclerView.
     fun initalizeGestureDetector(ctx: Context): GestureDetector {
         var gestureDetector = GestureDetector(ctx, object : GestureDetector.SimpleOnGestureListener() {
             override fun onSingleTapUp(e: MotionEvent): Boolean {

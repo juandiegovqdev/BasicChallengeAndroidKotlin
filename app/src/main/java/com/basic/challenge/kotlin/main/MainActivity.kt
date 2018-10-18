@@ -46,20 +46,14 @@ class MainActivity : AppCompatActivity(), MainView {
         presenter.onDestroy()
     }
 
-    // With initializeGestureDetector(), we are initializing a gesture detector,
-    // to handle the OnClick Method of the RecyclerView.
     override fun initalizeGestureDetector() {
         gestureDetector = presenter.initalizeGestureDetector(this)
     }
 
-    // With getCharacters(), we are initializing a Retrofit object, so that we get
-    // a list populated with all characters.
     override fun getCharacters() {
         characters = presenter.getCharacters()
     }
 
-    // With populateList(), we are calling the method from the presenter, so that we populate
-    // a RecyclerView with the list of characters that we got from getCharacters()
     override fun populateList() {
         presenter.populateList(rv, this, characters, pb, gestureDetector)
     }

@@ -11,11 +11,9 @@ import android.widget.Toast
 // user more than one time.
 class Utils {
 
-
     object showToast{
         operator fun invoke(ctx : Context, message : String){
             Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
         }
     }
-
 }
