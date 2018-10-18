@@ -56,8 +56,9 @@ class MainPresenter(var mainView: MainView?) {
                                 character.id = response.body()!![position].id
                                 character.genre = response.body()!![position].genre
 
-                                val intent = Intent(ctx, DetailsActivity::class.java)
+                                var intent = Intent(ctx, DetailsActivity::class.java)
                                 intent.putExtra("character", character)
+
                                 startActivity(ctx, intent, null)
 
                                 return true
