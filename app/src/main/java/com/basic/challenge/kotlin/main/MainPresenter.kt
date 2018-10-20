@@ -32,6 +32,7 @@ import android.provider.Settings.Global.getString
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
+import com.basic.challenge.kotlin.Utils
 import com.marcoscg.licenser.License
 import com.marcoscg.licenser.Library
 import com.marcoscg.licenser.LicenserDialog
@@ -97,29 +98,9 @@ class MainPresenter(var mainView: MainView?) {
         when (item.itemId) {
             R.id.action_menu_licenses -> {
                 // showToast(ctx, "Testing our menu")
-                showLicenseDialog(ctx)
+                Utils.showLicenseDialog(ctx)
             }
         }
-    }
-
-    fun showLicenseDialog(ctx: Context) {
-        LicenserDialog(ctx)
-                .setTitle("Licenses")
-                // .setCustomNoticeTitle("Notices for files:")
-                .setBackgroundColor(Color.WHITE) // Optional
-                .setLibrary(Library("Android Support Libraries",
-                        "https://developer.android.com/topic/libraries/support-library/index.html",
-                        License.APACHE))
-                .setLibrary(Library("Example Library",
-                        "https://github.com/marcoscgdev",
-                        License.APACHE))
-                .setLibrary(Library("Licenser",
-                        "https://github.com/marcoscgdev/Licenser",
-                        License.MIT))
-                .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
-                    // TODO: 11/02/2018
-                }
-                .show()
     }
 
     fun isNetworkAvailable(ctx: Context) {
@@ -147,19 +128,8 @@ class MainPresenter(var mainView: MainView?) {
         }
     }
 
-    private fun askForPermission(permission: String, requestCode: Int?, ctx: Context, activity: Activity) {
-        if (ContextCompat.checkSelfPermission(ctx, permission) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode!!)
-            } else {
-                ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode!!)
-            }
-        } else {
-        }
-    }
-
     fun askPermissions(ctx: Context, activity: Activity) {
-        askForPermission(Manifest.permission.INTERNET, 1, ctx, activity)
+        Utils.askForPermissions(Manifest.permission.INTERNET, 1, ctx, activity)
     }
 
     // With getCharacters(), we are initializing a Retrofit object, so that we get
