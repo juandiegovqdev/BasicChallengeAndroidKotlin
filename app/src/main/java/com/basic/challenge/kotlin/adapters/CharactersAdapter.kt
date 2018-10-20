@@ -1,6 +1,7 @@
 package com.basic.challenge.kotlin.adapters
 
 import android.content.Context
+import android.content.res.AssetManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,9 @@ import com.basic.challenge.kotlin.objects.Character
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_female.view.*
 import kotlinx.android.synthetic.main.item_male.view.*
+import android.graphics.Typeface
+import android.support.v4.content.res.ResourcesCompat
+
 
 class CharactersAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -60,6 +64,10 @@ class CharactersAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
 
         fun bindView(character: Character) {
             itemView.genre_male.text = character.name
+
+            val myCustomFont : Typeface? = ResourcesCompat.getFont(itemView.context, R.font.game_of_thrones)
+            itemView.genre_male.typeface = myCustomFont
+
             Picasso.get().load(character.imageUrl).into(itemView.image_male)
         }
     }
@@ -68,6 +76,10 @@ class CharactersAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
 
         fun bindView(character: Character) {
             itemView.genre_female.text = character.name
+
+            val myCustomFont : Typeface? = ResourcesCompat.getFont(itemView.context, R.font.game_of_thrones)
+            itemView.genre_female.typeface = myCustomFont
+
             Picasso.get().load(character.imageUrl).into(itemView.image_female)
         }
     }

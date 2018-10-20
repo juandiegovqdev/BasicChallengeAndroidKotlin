@@ -1,22 +1,31 @@
 package com.basic.challenge.kotlin.character_details
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.ActionBar
 import android.widget.ImageView
 import android.widget.TextView
+import com.basic.challenge.kotlin.R
 import com.basic.challenge.kotlin.objects.Character
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_female.view.*
 
 class DetailsPresenter(var detailsView: DetailsView?) {
 
     // This method sets the character description to a TextView.
-    fun setTextDescription(textView: TextView, description: String) {
+    fun setTextDescription(textView: TextView, description: String, ctx: Context) {
         textView.setText(description)
+        val myCustomFont: Typeface? = ResourcesCompat.getFont(ctx, R.font.game_of_thrones)
+        textView.typeface = myCustomFont
     }
 
     // This method sets the character name to a TextView.
-    fun setTextName(textView: TextView, name: String) {
+    fun setTextName(textView: TextView, name: String, ctx: Context) {
         textView.setText(name)
+        val myCustomFont: Typeface? = ResourcesCompat.getFont(ctx, R.font.game_of_thrones)
+        textView.typeface = myCustomFont
     }
 
     // This method gets the character from an Intent.
@@ -39,6 +48,8 @@ class DetailsPresenter(var detailsView: DetailsView?) {
     // title.
     fun setTitleActionbar(actionBar: ActionBar?, text: String) {
         actionBar!!.setTitle(text)
+        // val myCustomFont : Typeface? = ResourcesCompat.getFont(getContext, R.font.game_of_thrones)
+        // = myCustomFont
     }
 
     fun onDestroy() {

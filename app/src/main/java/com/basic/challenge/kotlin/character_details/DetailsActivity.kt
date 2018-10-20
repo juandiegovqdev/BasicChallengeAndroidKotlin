@@ -48,11 +48,11 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
     }
 
     override fun setTextDescription() {
-        presenter.setTextDescription(tvDescriptionCharacter, character.description)
+        presenter.setTextDescription(tvDescriptionCharacter, character.description, this)
     }
 
     override fun setTextName() {
-        presenter.setTextName(tvNameCharacter, character.name)
+        presenter.setTextName(tvNameCharacter, character.name, this)
     }
 
     // This method sets the character image to a ImageView.
