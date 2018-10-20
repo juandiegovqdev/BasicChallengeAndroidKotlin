@@ -1,6 +1,8 @@
 package com.basic.challenge.kotlin.main
 
-import android.app.Service
+import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.ContextCompat.startActivity
@@ -9,8 +11,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import com.basic.challenge.kotlin.character_details.DetailsActivity
 import com.basic.challenge.kotlin.interfaces.MockyService
 import com.basic.challenge.kotlin.objects.Character
@@ -19,11 +19,23 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import android.support.v4.content.ContextCompat.startActivity
-import android.widget.Toast
-import com.basic.challenge.kotlin.Utils
+import android.view.MenuItem
+import com.basic.challenge.kotlin.R
 import com.basic.challenge.kotlin.Utils.*
-import okhttp3.internal.Util
+import com.basic.challenge.kotlin.adapters.CharactersAdapter
+import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.provider.Settings.Global.getString
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import android.widget.Toast
+import com.marcoscg.licenser.License
+import com.marcoscg.licenser.Library
+import com.marcoscg.licenser.LicenserDialog
+
 
 class MainPresenter(var mainView: MainView?) {
 
@@ -78,6 +90,76 @@ class MainPresenter(var mainView: MainView?) {
                 pb.hide()
             }
         })
+    }
+
+    // It handles what the app does when we click any of the menu buttons.
+    fun action_menu_inflater(ctx: Context, item: MenuItem) {
+        when (item.itemId) {
+            R.id.action_menu_licenses -> {
+                // showToast(ctx, "Testing our menu")
+                showLicenseDialog(ctx)
+            }
+        }
+    }
+
+    fun showLicenseDialog(ctx: Context) {
+        LicenserDialog(ctx)
+                .setTitle("Licenses")
+                // .setCustomNoticeTitle("Notices for files:")
+                .setBackgroundColor(Color.WHITE) // Optional
+                .setLibrary(Library("Android Support Libraries",
+                        "https://developer.android.com/topic/libraries/support-library/index.html",
+                        License.APACHE))
+                .setLibrary(Library("Example Library",
+                        "https://github.com/marcoscgdev",
+                        License.APACHE))
+                .setLibrary(Library("Licenser",
+                        "https://github.com/marcoscgdev/Licenser",
+                        License.MIT))
+                .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
+                    // TODO: 11/02/2018
+                }
+                .show()
+    }
+
+    fun isNetworkAvailable(ctx: Context) {
+        var cm = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        var activeNetworkInfo: NetworkInfo? = null
+        activeNetworkInfo = cm.activeNetworkInfo
+        var available : Boolean = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
+        when {
+            available == false -> {
+                val builder = AlertDialog.Builder(ctx)
+                // Set the alert dialog title
+                builder.setTitle(ctx.getString(R.string.app_name))
+                // Display a message on alert dialog
+                builder.setMessage("Internet connection is not available. Please, close the app and connect it.")
+                // Set a positive button and its click listener on alert dialog
+                builder.setPositiveButton("YES") { dialog, which ->
+                    // Do something when user press the positive button
+                    System.exit(0)
+                }
+                // Finally, make the alert dialog using builder
+                val dialog: AlertDialog = builder.create()
+                // Display the alert dialog on app interface
+                dialog.show()
+            }
+        }
+    }
+
+    private fun askForPermission(permission: String, requestCode: Int?, ctx: Context, activity: Activity) {
+        if (ContextCompat.checkSelfPermission(ctx, permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode!!)
+            } else {
+                ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode!!)
+            }
+        } else {
+        }
+    }
+
+    fun askPermissions(ctx: Context, activity: Activity) {
+        askForPermission(Manifest.permission.INTERNET, 1, ctx, activity)
     }
 
     // With getCharacters(), we are initializing a Retrofit object, so that we get
