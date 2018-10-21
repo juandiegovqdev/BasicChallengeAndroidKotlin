@@ -55,7 +55,6 @@ class MainPresenter(var mainView: MainView?) {
 
                 rv.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
                     override fun onTouchEvent(rv: RecyclerView?, motionEvent: MotionEvent?) {}
-
                     override fun onInterceptTouchEvent(rv: RecyclerView?, motionEvent: MotionEvent?): Boolean {
                         try {
                             val child = rv!!.findChildViewUnder(motionEvent!!.x, motionEvent.y)
@@ -69,11 +68,11 @@ class MainPresenter(var mainView: MainView?) {
                                 character.id = response.body()!![position].id
                                 character.genre = response.body()!![position].genre
 
+                                // Those lines of code basically opens a new activity, sending
+                                // a custom object with information related to the character.
                                 var intent = Intent(ctx, DetailsActivity::class.java)
                                 intent.putExtra("character", character)
-
                                 startActivity(ctx, intent, null)
-
                                 return true
                             }
                         } catch (e: Exception) {
@@ -103,11 +102,12 @@ class MainPresenter(var mainView: MainView?) {
         }
     }
 
+    // This method checks if our device is connected to the Internet.
     fun isNetworkAvailable(ctx: Context) {
         var cm = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var activeNetworkInfo: NetworkInfo? = null
         activeNetworkInfo = cm.activeNetworkInfo
-        var available : Boolean = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
+        var available: Boolean = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
         when {
             available == false -> {
                 val builder = AlertDialog.Builder(ctx)
@@ -128,6 +128,7 @@ class MainPresenter(var mainView: MainView?) {
         }
     }
 
+    // This method checks if the permissions have been granted.
     fun askPermissions(ctx: Context, activity: Activity) {
         Utils.askForPermissions(Manifest.permission.INTERNET, 1, ctx, activity)
     }

@@ -18,13 +18,15 @@ import com.marcoscg.licenser.LicenserDialog
 // user more than one time.
 class Utils {
 
+    // A method to show a simple Toast.
     object showToast {
         operator fun invoke(ctx: Context, message: String) {
             Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
         }
     }
 
-    object askForPermissions{
+    // A method to ask for permisions.
+    object askForPermissions {
         operator fun invoke(permission: String, requestCode: Int?, ctx: Context, activity: Activity) {
             if (ContextCompat.checkSelfPermission(ctx, permission) != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
@@ -37,12 +39,12 @@ class Utils {
         }
     }
 
+    // A method to show a simple dialog with information related to all libraries used in this app.
     object showLicenseDialog {
         operator fun invoke(ctx: Context) {
             LicenserDialog(ctx)
                     .setTitle("Licenses")
-                    // .setCustomNoticeTitle("Notices for files:")
-                    .setBackgroundColor(Color.WHITE) // Optional
+                    .setBackgroundColor(Color.WHITE)
                     .setLibrary(Library("Android Support Libraries",
                             "https://developer.android.com/topic/libraries/support-library/index.html",
                             License.APACHE))
@@ -58,11 +60,7 @@ class Utils {
                     .setLibrary(Library("Licenser",
                             "http://square.github.io/picasso/",
                             License.MIT))
-                    .setLibrary(Library("Licenser",
-                            "http://square.github.io/picasso/",
-                            License.MIT))
                     .setPositiveButton(android.R.string.ok) { dialogInterface, i ->
-                        // TODO: 11/02/2018
                     }
                     .show()
         }

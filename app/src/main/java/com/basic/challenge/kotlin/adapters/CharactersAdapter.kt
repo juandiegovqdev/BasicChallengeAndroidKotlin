@@ -65,6 +65,8 @@ class CharactersAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         fun bindView(character: Character) {
             itemView.genre_male.text = character.name
 
+            // This code initializes a custom typeface using the font that is located at /font,
+            // and also change it.
             val myCustomFont : Typeface? = ResourcesCompat.getFont(itemView.context, R.font.game_of_thrones)
             itemView.genre_male.typeface = myCustomFont
 
@@ -77,6 +79,8 @@ class CharactersAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
         fun bindView(character: Character) {
             itemView.genre_female.text = character.name
 
+            // This code initializes a custom typeface using the font that is located at /font,
+            // and also change it.
             val myCustomFont : Typeface? = ResourcesCompat.getFont(itemView.context, R.font.game_of_thrones)
             itemView.genre_female.typeface = myCustomFont
 
