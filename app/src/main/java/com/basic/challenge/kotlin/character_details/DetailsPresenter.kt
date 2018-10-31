@@ -21,12 +21,7 @@ class DetailsPresenter(var detailsView: DetailsView?) {
         textView.typeface = myCustomFont
     }
 
-    // This method sets the character name to a TextView.
-    fun setTextName(textView: TextView, name: String, ctx: Context) {
-        textView.setText(name)
-        val myCustomFont: Typeface? = ResourcesCompat.getFont(ctx, R.font.game_of_thrones)
-        textView.typeface = myCustomFont
-    }
+
 
     // This method gets the character from an Intent.
     // The character that it gets is the one that
